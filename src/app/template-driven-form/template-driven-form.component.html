@@ -1,0 +1,66 @@
+<div class="container">
+ <div class="row align-items-start">
+   <div class="col-md-6">
+     <h1 class="my-2">Template driven form</h1>
+     <form class="my-3 form" #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm); contactForm.reset()">
+       <p>
+         <label for="name">Name: </label>
+         <input type="text" id="name" name="name" ngModel class="mx-2" required #name="ngModel" [minlength]="4" />
+         <span class="error" *ngIf="name.touched && name.errors?.['required']">Name is required!</span>
+         <span class="error" *ngIf="name.touched && name.errors?.['minlength']">Name minimum length is {{name.errors?.['minlength']?.requiredLength}}</span>
+       </p>
+       <p>
+         <label for="email">Email: </label>
+         <input type="text" id="email" name="email" ngModel class="mx-2" required #email="ngModel"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  />
+            <span *ngIf="!email?.valid && (email?.touched || email?.dirty)" class="error">
+                <span  *ngIf="email.errors?.['required']">Email is required!</span>
+                <span  *ngIf="email.errors?.['pattern']">Please enter valid email!</span>
+                <!-- <span  *ngIf="email.hasError('emailvalidator')">Please provide a valid email address!</span> -->
+            </span>
+            <!--click on submit button validation---->
+            <!-- <span *ngIf="(contactForm.submitted && email.errors)|| (email?.touched || email?.dirty)" class="error">
+                <span  *ngIf="email.errors?.['required']">Email is required!</span>
+                <span  *ngIf="email.errors?.['pattern']">Email is required!</span>
+            </span> -->
+       </p>
+       <p>
+         <label for="gender">Geneder: </label>
+         <input type="radio" value="male" id="gender-male" name="gender" ngModel class="mx-2" required #gender="ngModel" />
+         Male
+         <input type="radio" value="female" id="gender-female" name="gender" ngModel required #gender="ngModel" />
+         Female
+         <span *ngIf="!gender?.valid && (gender?.dirty || gender?.touched)" class="error">
+            <span *ngIf="gender.errors?.['required']">
+              Gender is required
+            </span>
+          </span>
+       </p>
+       <p>
+         <label for="isMarried">Married: </label>
+         <input type="checkbox" id="isMarried" name="isMarried" ngModel class="mx-2" #isMarried="ngModel" />
+         <span>
+            <span class="error" *ngIf="isMarried.touched && isMarried.errors?.['required']">Married is required!</span>
+         </span>
+       </p>
+       <!-- <p>
+        <label for="name">Password: </label>
+        <input type="password" id="password" name="password" ngModel class="mx-2" required #password="ngModel" [minlength]="4" />
+        <span class="error" *ngIf="password.touched && password.errors?.['required']">Password is required!</span>
+        <span class="error" *ngIf="password.touched && password.errors?.['minlength']">Password minimum length is {{password.errors?.['minlength']?.requiredLength}}</span>
+      </p>
+      <p>
+        <label for="name">Confirm password: </label>
+        <input type="password" id="cpassword" name="cpassword" ngModel class="mx-2" required #cpassword="ngModel" appPasswordvalidator="password" />
+        <span class="error" *ngIf="cpassword.touched && cpassword.errors?.['required']">Confirm password is required!</span>
+        <span *ngIf="cpassword.hasError('passwordMatchError')" class="error">
+            Confirm Password & Password must be same.
+          </span>
+      </p> -->
+       <p>
+         <button class="btn btn-primary" type="submit" [disabled]="!contactForm.valid">Submit</button>
+       </p>
+     </form>
+   </div>
+ </div>
+</div>
