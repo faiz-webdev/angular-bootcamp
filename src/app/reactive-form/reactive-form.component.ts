@@ -13,6 +13,11 @@ export class ReactiveFormComponent implements OnInit {
     gender: new FormControl(),
     isMarried: new FormControl(),
     country: new FormControl(),
+    address:new FormGroup({
+      city: new FormControl(),
+      street: new FormControl(),
+      pincode:new FormControl(),
+    })
   });
 
   constructor() {}

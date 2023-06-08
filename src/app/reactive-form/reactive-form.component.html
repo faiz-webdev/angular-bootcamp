@@ -11,13 +11,11 @@
           <label for="email">Email </label>
           <input type="text" id="email" formControlName="email" />
         </p>
-        <p>
-          <label for="gender">Geneder </label>
-          <input type="radio" value="male" id="gender" formControlName="gender" /> Male
-          <input type="radio" value="female" id="gender" formControlName="gender" /> Female
+        <p><label for="gender">Geneder </label>
+          Male <input type="radio" value="male" id="gender" formControlName="gender" />
+          Female <input type="radio" value="female" id="gender" formControlName="gender" />
         </p>
-        <p>
-          <label for="isMarried">Married </label>
+        <p><label for="isMarried">Married </label>
           <input type="checkbox" id="isMarried" formControlName="isMarried" />
         </p>
         <p>
@@ -25,13 +23,21 @@
           <select id="country" formControlName="country">
             <option [value]="1">India</option>
             <option [value]="2">USA</option>
-            <option [value]="3">England</option>
-            <option [value]="4">Singapore</option>
           </select>
         </p>
-        <p>
-          <button type="submit">Submit</button>
-        </p>
+        <h5>Address</h5>
+        <div formGroupName="address">
+          <div class="form-group"><label for="city">City</label>
+            <input type="text" class="form-control" name="city" formControlName="city" />
+          </div>
+          <div class="form-group"><label for="street">Street</label>
+            <input type="text" class="form-control" name="street" formControlName="street" />
+          </div>
+          <div class="form-group"><label for="pincode">Pin Code</label>
+            <input type="text" class="form-control" name="pincode" formControlName="pincode"/>
+          </div>
+        </div>
+        <p><button type="submit">Submit</button></p>
       </form>
     </div>
   </div>
