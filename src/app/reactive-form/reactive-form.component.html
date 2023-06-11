@@ -6,14 +6,44 @@
         <p>
           <label for="firstname">First Name </label>
           <input type="text" id="firstname" formControlName="firstname" />
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.firstname?.valid && (contactForm.controls.firstname?.dirty
+            ||contactForm.controls.firstname?.touched)">
+            <span *ngIf="contactForm.controls.firstname.errors?.['required']">
+              First Name is required!
+            </span>
+            <span *ngIf="contactForm.controls.firstname.errors?.['minlength']">
+              First Name must be 10 characters!
+            </span>
+            <span *ngIf="contactForm.controls.firstname.errors?.['pattern']">
+              Special characters is not allowed
+            </span>
+          </span>
         </p>
         <p>
           <label for="email">Email </label>
           <input type="text" id="email" formControlName="email" />
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.email?.valid && (contactForm.controls.email?.dirty
+            ||contactForm.controls.email?.touched)">
+            <span *ngIf="contactForm.controls.email.errors?.['required']">
+              Email is required!
+            </span>
+            <span *ngIf="contactForm.controls.email.errors?.['email']">
+              Email must be valid email!
+            </span>
+          </span>
         </p>
         <p><label for="gender">Geneder </label>
           Male <input type="radio" value="male" id="gender" formControlName="gender" />
           Female <input type="radio" value="female" id="gender" formControlName="gender" />
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.gender?.valid && (contactForm.controls.gender?.dirty
+            ||contactForm.controls.gender?.touched)">
+            <span *ngIf="contactForm.controls.gender.errors?.['required']">
+              Gender is required!
+            </span>
+          </span>
         </p>
         <p><label for="isMarried">Married </label>
           <input type="checkbox" id="isMarried" formControlName="isMarried" />
@@ -24,20 +54,44 @@
             <option [value]="1">India</option>
             <option [value]="2">USA</option>
           </select>
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.country?.valid && (contactForm.controls.country?.dirty
+            ||contactForm.controls.country?.touched)">
+            <span *ngIf="contactForm.controls.country.errors?.['required']">
+              Country is required!
+            </span>
+          </span>
         </p>
         <h5>Address</h5>
         <div formGroupName="address">
           <div class="form-group"><label for="city">City</label>
             <input type="text" class="form-control" name="city" formControlName="city" />
+            <span class="text-danger"
+              *ngIf="!contactForm.controls.address.controls.city.valid && (contactForm.controls.address.controls.city?.dirty
+              ||contactForm.controls.address.controls.city?.touched)">
+              <span *ngIf="contactForm.controls.address.controls.city.errors?.['required']">
+                City is required!
+              </span>
+            </span>
           </div>
           <div class="form-group"><label for="street">Street</label>
             <input type="text" class="form-control" name="street" formControlName="street" />
           </div>
           <div class="form-group"><label for="pincode">Pin Code</label>
             <input type="text" class="form-control" name="pincode" formControlName="pincode"/>
+              <span class="text-danger"
+                *ngIf="!contactForm.controls.address.controls.pincode.valid && (contactForm.controls.address.controls.pincode?.dirty
+                ||contactForm.controls.address.controls.pincode?.touched)">
+                <span *ngIf="contactForm.controls.address.controls.pincode.errors?.['maxlength']">
+                  Pincode can be max 6 characters long!
+                </span>
+                <span *ngIf="contactForm.controls.address.controls.pincode.errors?.['pattern']">
+                  Only number allowed!
+                </span>
+              </span>
           </div>
         </div>
-        <p><button type="submit">Submit</button></p>
+        <p><button [disabled]="!contactForm.valid" type="submit" class="my-2">Submit</button></p>
       </form>
     </div>
   </div>

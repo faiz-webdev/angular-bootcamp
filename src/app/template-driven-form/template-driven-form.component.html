@@ -57,8 +57,15 @@
             Confirm Password & Password must be same.
           </span>
       </p> -->
+      <!-- <p>
+        <input type="file" id="file" name="file" ngModel class="mx-2" required #file="ngModel" />
+        <span *ngIf="(contactForm.submitted && file.errors)" class="error">
+                <span  *ngIf="file.errors?.['required']">file is required!</span>
+            </span>
+      </p> -->
        <p>
-         <button class="btn btn-primary" type="submit" [disabled]="!contactForm.valid">Submit</button>
+         <!-- <button class="btn btn-primary" type="submit" [disabled]="!contactForm.valid">Submit</button> -->
+         <button class="btn btn-primary" type="submit">Submit</button>
        </p>
      </form>
    </div>

@@ -20,7 +20,7 @@ export class TemplateDrivenFormComponent implements OnInit {
   }
 
   onSubmit(formVal: NgForm) {
-    if (formVal.invalid) return;
+    // if (formVal.invalid) return;
     console.log(formVal.value);
   }
 }

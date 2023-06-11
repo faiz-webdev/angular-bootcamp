@@ -8,16 +8,24 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ReactiveFormComponent implements OnInit {
   contactForm = new FormGroup({
-    firstname: new FormControl(),
-    email: new FormControl(),
-    gender: new FormControl(),
-    isMarried: new FormControl(),
-    country: new FormControl(),
-    address:new FormGroup({
-      city: new FormControl(),
-      street: new FormControl(),
-      pincode:new FormControl(),
-    })
+    firstname: new FormControl('', [
+      Validators.required,
+      Validators.minLength(10),
+      Validators.pattern('^[a-zA-Z]+$'),
+    ]),
+    email: new FormControl('', [Validators.email, Validators.required]),
+    gender: new FormControl('', [Validators.required]),
+    isMarried: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    address: new FormGroup({
+      city: new FormControl('', [Validators.required]),
+      street: new FormControl(''),
+      pincode: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(6),
+        Validators.pattern('^[0-9]*$'),
+      ]),
+    }),
   });
 
   constructor() {}
@@ -25,6 +33,6 @@ export class ReactiveFormComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    console.log(this.contactForm.value)
+    console.log(this.contactForm.value);
   }
 }
