@@ -7,8 +7,7 @@
           <label for="firstname">First Name </label>
           <input type="text" id="firstname" formControlName="firstname" />
           <span class="text-danger"
-            *ngIf="!firstname?.valid && (firstname?.dirty
-            ||firstname?.touched)">
+            *ngIf="submitted && firstname?.errors">
             <span *ngIf="firstname?.errors?.['required']">
               First Name is required!
             </span>
@@ -16,7 +15,7 @@
               First Name must be 10 characters!
             </span>
             <span *ngIf="contactForm.controls.firstname.errors?.['pattern']">
-              Special characters is not allowed
+              Special characters is not allowed!
             </span>
           </span>
         </p>
@@ -24,13 +23,15 @@
           <label for="email">Email </label>
           <input type="text" id="email" formControlName="email" />
           <span class="text-danger"
-            *ngIf="!email?.valid && (email?.dirty
-            ||email?.touched)">
+            *ngIf="submitted && email?.errors">
             <span *ngIf="email?.errors?.['required']">
               Email is required!
             </span>
             <span *ngIf="email?.errors?.['email']">
               Email must be valid email!
+            </span>
+            <span *ngIf="email?.errors?.['usernameAlreadyExists']">
+              Email is already exists!
             </span>
           </span>
         </p>
@@ -38,8 +39,7 @@
           Male <input type="radio" value="male" id="gender" formControlName="gender" />
           Female <input type="radio" value="female" id="gender" formControlName="gender" />
           <span class="text-danger"
-            *ngIf="!contactForm.controls.gender?.valid && (contactForm.controls.gender?.dirty
-            ||contactForm.controls.gender?.touched)">
+            *ngIf="submitted && contactForm.controls.gender.errors">
             <span *ngIf="contactForm.controls.gender.errors?.['required']">
               Gender is required!
             </span>
@@ -47,6 +47,12 @@
         </p>
         <p><label for="isMarried">Married </label>
           <input type="checkbox" id="isMarried" formControlName="isMarried" />
+          <span class="text-danger"
+            *ngIf="submitted && f.isMarried.errors">
+            <span *ngIf="f.isMarried.errors?.['required']">
+              Marital status is required!
+            </span>
+          </span>
         </p>
         <p>
           <label for="country">country </label>
@@ -55,9 +61,8 @@
             <option [value]="2">USA</option>
           </select>
           <span class="text-danger"
-            *ngIf="!contactForm.controls.country?.valid && (contactForm.controls.country?.dirty
-            ||contactForm.controls.country?.touched)">
-            <span *ngIf="contactForm.controls.country.errors?.['required']">
+            *ngIf="submitted && f.country.errors">
+            <span *ngIf="f.country.errors?.['required']">
               Country is required!
             </span>
           </span>
@@ -66,25 +71,36 @@
           <label for="firstname">Password </label>
           <input type="text" id="password" formControlName="password" />
           <span class="text-danger"
-            *ngIf="!password?.valid && (password?.dirty
-            ||password?.touched)">
+            *ngIf="submitted && password?.errors">
             <span *ngIf="password?.errors?.['required']">
               Password is required!
             </span>
           </span>
         </p>
         <p>
-          <label for="firstname">Confirm Password </label>
-          <input type="text" id="password" formControlName="confirmPassword" />
+          <label for="confirmPassword">Confirm Password </label>
+          <input type="text" id="confirmPassword" formControlName="confirmPassword" />
           <span class="text-danger"
-            *ngIf="!confirmPassword?.valid && (confirmPassword?.dirty
-            ||confirmPassword?.touched)">
+            *ngIf="submitted && confirmPassword?.errors">
             <span *ngIf="confirmPassword?.errors?.['required']">
               Confirm password is required!
             </span>
           </span>
-          <span *ngIf="passwordMatchError" class="text-danger">
+          <!-- <span *ngIf="passwordMatchError" class="text-danger">
             Password does not match
+          </span> -->
+          <span *ngIf="contactForm.getError('mismatch') && contactForm.get('confirmPassword')?.dirty" class="text-danger">
+            Password does not match
+          </span>
+        </p>
+        <p>
+          <label for="file">File </label>
+          <input type="file" id="file" formControlName="file" />
+          <span class="text-danger"
+            *ngIf="submitted && file?.errors">
+            <span *ngIf="file?.errors?.['required']">
+              File is required!
+            </span>
           </span>
         </p>
         <h5>Address</h5>
@@ -92,8 +108,7 @@
           <div class="form-group"><label for="city">City</label>
             <input type="text" class="form-control" name="city" formControlName="city" />
             <span class="text-danger"
-              *ngIf="!city?.valid && (city?.dirty
-              ||city?.touched)">
+              *ngIf="submitted && city?.errors">
               <span *ngIf="city?.errors?.['required']">
                 City is required!
               </span>
@@ -105,8 +120,10 @@
           <div class="form-group"><label for="pincode">Pin Code</label>
             <input type="text" class="form-control" name="pincode" formControlName="pincode"/>
               <span class="text-danger"
-                *ngIf="!contactForm.controls.address.controls.pincode.valid && (contactForm.controls.address.controls.pincode?.dirty
-                ||contactForm.controls.address.controls.pincode?.touched)">
+                *ngIf="submitted && contactForm.controls.address.controls.pincode.errors">
+                <span *ngIf="contactForm.controls.address.controls.pincode.errors?.['required']">
+                  Pincode is required!
+                </span>
                 <span *ngIf="contactForm.controls.address.controls.pincode.errors?.['maxlength']">
                   Pincode can be max 6 characters long!
                 </span>
@@ -116,7 +133,7 @@
               </span>
           </div>
         </div>
-        <p><button [disabled]="!contactForm.valid" type="submit" class="my-2">Submit</button></p>
+        <p><button type="submit" class="my-2">Submit</button></p>
       </form>
     </div>
   </div>
