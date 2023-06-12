@@ -1058,3 +1058,95 @@ export class ReactiveFormComponent implements OnInit {
         return this.contactForm.get('file');
       }
     }`
+
+## Reactive Form with FormBuilder html
+  --<div class="container">
+      <div class="row align-items-start">
+        <div class="col-md-6">
+          <h1 class="my-2">Reactive form with FormBuilder</h1>
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <p>
+              <label for="firstname">First Name </label>
+              <input type="text" id="firstname" formControlName="firstname" />
+              <span class="text-danger"
+                *ngIf="submitted && firstname?.errors">
+                <span *ngIf="firstname?.errors?.['required']">
+                  First Name is required!
+                </span>
+              </span>
+            </p>
+            <p>
+              <label for="email">Email </label>
+              <input type="text" id="email" formControlName="email" />
+              <span class="text-danger"
+                *ngIf="submitted && contactForm.controls?.['email']?.errors">
+                <span *ngIf="contactForm.controls?.['email']?.errors?.['required']">
+                  Email is required!
+                </span>
+                <span *ngIf="submitted && contactFormControls?.['email']?.errors?.['email']">
+                  Email must be valid email!
+                </span>
+              </span>
+            </p>
+            <h5>Address</h5>
+            <div formGroupName="address">
+              <div class="form-group"><label for="city">City</label>
+                <input type="text" class="form-control" name="city" formControlName="city" />
+                <span class="text-danger"
+                  *ngIf="submitted && city?.errors">
+                  <span *ngIf="city?.errors?.['required']">
+                    City is required!
+                  </span>
+                </span>
+              </div>
+            </div>
+            <p><button type="submit" class="my-2">Submit</button></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+## Reactive Form with FormBuilder ts
+  --`import { Component, OnInit } from '@angular/core';
+      import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+      @Component({
+        selector: 'app-reactive-form-formbuilder',
+        templateUrl: './reactive-form-formbuilder.component.html',
+        styleUrls: ['./reactive-form-formbuilder.component.css'],
+      })
+      export class ReactiveFormFormbuilderComponent implements OnInit {
+        contactForm: FormGroup;
+        submitted: boolean = false;
+        constructor(private formBuilder: FormBuilder) {}
+
+        ngOnInit(): void {
+          this.contactForm = this.formBuilder.group({
+            firstname: ['', [Validators.required, Validators.minLength(10)]],
+            email: ['', [Validators.required, Validators.email]],
+            address: this.formBuilder.group({
+              city: ['', [Validators.required]],
+            }),
+          });
+        }
+
+        onSubmit() {
+          this.submitted = true;
+          if (!this.contactForm.valid) return;
+
+          console.log(this.contactForm.value);
+        }
+
+        get firstname() {
+          return this.contactForm.get('firstname');
+        }
+
+        get contactFormControls() {
+          return this.contactForm.controls;
+        }
+
+        get city() {
+          return this.contactForm.get("address")?.get('city');
+        }
+      }`
+  

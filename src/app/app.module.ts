@@ -8,6 +8,7 @@ import { TemplateDrivenFormComponent } from './template-driven-form/template-dri
 import { PasswordvalidatorDirective } from './_helper/passwordvalidator.directive';
 import { EmailValidatorDirective } from './_helper/email-validator.directive';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
+import { ReactiveFormFormbuilderComponent } from './reactive-form-formbuilder/reactive-form-formbuilder.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
     TemplateDrivenFormComponent,
     PasswordvalidatorDirective,
     EmailValidatorDirective,
-    ReactiveFormComponent
+    ReactiveFormComponent,
+    ReactiveFormFormbuilderComponent
   ],
   imports: [
     BrowserModule,

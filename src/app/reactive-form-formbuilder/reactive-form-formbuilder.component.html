@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row align-items-start">
+      <div class="col-md-6">
+        <h1 class="my-2">Reactive form with FormBuilder</h1>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <p>
+            <label for="firstname">First Name </label>
+            <input type="text" id="firstname" formControlName="firstname" />
+            <span class="text-danger"
+              *ngIf="submitted && firstname?.errors">
+              <span *ngIf="firstname?.errors?.['required']">
+                First Name is required!
+              </span>
+            </span>
+          </p>
+          <p>
+            <label for="email">Email </label>
+            <input type="text" id="email" formControlName="email" />
+            <span class="text-danger"
+              *ngIf="submitted && contactForm.controls?.['email']?.errors">
+              <span *ngIf="contactForm.controls?.['email']?.errors?.['required']">
+                Email is required!
+              </span>
+              <span *ngIf="submitted && contactFormControls?.['email']?.errors?.['email']">
+                Email must be valid email!
+              </span>
+            </span>
+          </p>
+          <h5>Address</h5>
+          <div formGroupName="address">
+            <div class="form-group"><label for="city">City</label>
+              <input type="text" class="form-control" name="city" formControlName="city" />
+              <span class="text-danger"
+                *ngIf="submitted && city?.errors">
+                <span *ngIf="city?.errors?.['required']">
+                  City is required!
+                </span>
+              </span>
+            </div>
+          </div>
+          <p><button type="submit" class="my-2">Submit</button></p>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
