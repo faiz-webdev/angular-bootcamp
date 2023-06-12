@@ -62,6 +62,31 @@
             </span>
           </span>
         </p>
+        <p>
+          <label for="firstname">Password </label>
+          <input type="text" id="password" formControlName="password" />
+          <span class="text-danger"
+            *ngIf="!password?.valid && (password?.dirty
+            ||password?.touched)">
+            <span *ngIf="password?.errors?.['required']">
+              Password is required!
+            </span>
+          </span>
+        </p>
+        <p>
+          <label for="firstname">Confirm Password </label>
+          <input type="text" id="password" formControlName="confirmPassword" />
+          <span class="text-danger"
+            *ngIf="!confirmPassword?.valid && (confirmPassword?.dirty
+            ||confirmPassword?.touched)">
+            <span *ngIf="confirmPassword?.errors?.['required']">
+              Confirm password is required!
+            </span>
+          </span>
+          <span *ngIf="passwordMatchError" class="text-danger">
+            Password does not match
+          </span>
+        </p>
         <h5>Address</h5>
         <div formGroupName="address">
           <div class="form-group"><label for="city">City</label>
