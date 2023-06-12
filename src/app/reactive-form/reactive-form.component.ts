@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ReactiveFormComponent implements OnInit {
   contactForm = new FormGroup({
-    firstname: new FormControl('', [
+    firstname: new FormControl({value:'tothenewtechnology', disabled: false}, [
       Validators.required,
       Validators.minLength(10),
       Validators.pattern('^[a-zA-Z]+$'),
@@ -34,5 +34,17 @@ export class ReactiveFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.contactForm.value);
+  }
+
+  get firstname() {
+    return this.contactForm.get('firstname');
+  }
+
+  get email() {
+    return this.contactForm.get('email');
+  }
+
+  get city() {
+    return this.contactForm.get('address')?.get('city');
   }
 }

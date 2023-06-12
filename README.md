@@ -338,3 +338,143 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
     </div>
   </div>
 </div>
+
+ ## Reactive form with validation html
+  --<div class="container">
+  <div class="row align-items-start">
+    <div class="col-md-6">
+      <h1 class="my-2">Reactive form</h1>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <p>
+          <label for="firstname">First Name </label>
+          <input type="text" id="firstname" formControlName="firstname" />
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.firstname?.valid && (contactForm.controls.firstname?.dirty
+            ||contactForm.controls.firstname?.touched)">
+            <span *ngIf="contactForm.controls.firstname.errors?.['required']">
+              First Name is required!
+            </span>
+            <span *ngIf="contactForm.controls.firstname.errors?.['minlength']">
+              First Name must be 10 characters!
+            </span>
+            <span *ngIf="contactForm.controls.firstname.errors?.['pattern']">
+              Special characters is not allowed
+            </span>
+          </span>
+        </p>
+        <p>
+          <label for="email">Email </label>
+          <input type="text" id="email" formControlName="email" />
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.email?.valid && (contactForm.controls.email?.dirty
+            ||contactForm.controls.email?.touched)">
+            <span *ngIf="contactForm.controls.email.errors?.['required']">
+              Email is required!
+            </span>
+            <span *ngIf="contactForm.controls.email.errors?.['email']">
+              Email must be valid email!
+            </span>
+          </span>
+        </p>
+        <p><label for="gender">Geneder </label>
+          Male <input type="radio" value="male" id="gender" formControlName="gender" />
+          Female <input type="radio" value="female" id="gender" formControlName="gender" />
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.gender?.valid && (contactForm.controls.gender?.dirty
+            ||contactForm.controls.gender?.touched)">
+            <span *ngIf="contactForm.controls.gender.errors?.['required']">
+              Gender is required!
+            </span>
+          </span>
+        </p>
+        <p><label for="isMarried">Married </label>
+          <input type="checkbox" id="isMarried" formControlName="isMarried" />
+        </p>
+        <p>
+          <label for="country">country </label>
+          <select id="country" formControlName="country">
+            <option [value]="1">India</option>
+            <option [value]="2">USA</option>
+          </select>
+          <span class="text-danger"
+            *ngIf="!contactForm.controls.country?.valid && (contactForm.controls.country?.dirty
+            ||contactForm.controls.country?.touched)">
+            <span *ngIf="contactForm.controls.country.errors?.['required']">
+              Country is required!
+            </span>
+          </span>
+        </p>
+        <h5>Address</h5>
+        <div formGroupName="address">
+          <div class="form-group"><label for="city">City</label>
+            <input type="text" class="form-control" name="city" formControlName="city" />
+            <span class="text-danger"
+              *ngIf="!contactForm.controls.address.controls.city.valid && (contactForm.controls.address.controls.city?.dirty
+              ||contactForm.controls.address.controls.city?.touched)">
+              <span *ngIf="contactForm.controls.address.controls.city.errors?.['required']">
+                City is required!
+              </span>
+            </span>
+          </div>
+          <div class="form-group"><label for="street">Street</label>
+            <input type="text" class="form-control" name="street" formControlName="street" />
+          </div>
+          <div class="form-group"><label for="pincode">Pin Code</label>
+            <input type="text" class="form-control" name="pincode" formControlName="pincode"/>
+              <span class="text-danger"
+                *ngIf="!contactForm.controls.address.controls.pincode.valid && (contactForm.controls.address.controls.pincode?.dirty
+                ||contactForm.controls.address.controls.pincode?.touched)">
+                <span *ngIf="contactForm.controls.address.controls.pincode.errors?.['maxlength']">
+                  Pincode can be max 6 characters long!
+                </span>
+                <span *ngIf="contactForm.controls.address.controls.pincode.errors?.['pattern']">
+                  Only number allowed!
+                </span>
+              </span>
+          </div>
+        </div>
+        <p><button [disabled]="!contactForm.valid" type="submit" class="my-2">Submit</button></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+  ## .ts
+    --import { Component, OnInit } from '@angular/core';
+    import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+    @Component({
+      selector: 'app-reactive-form',
+      templateUrl: './reactive-form.component.html',
+      styleUrls: ['./reactive-form.component.css'],
+    })
+    export class ReactiveFormComponent implements OnInit {
+      contactForm = new FormGroup({
+        firstname: new FormControl({value:'tothenewtechnology', disabled: true}, [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.pattern('^[a-zA-Z]+$'),
+        ]),
+        email: new FormControl('', [Validators.email, Validators.required]),
+        gender: new FormControl('', [Validators.required]),
+        isMarried: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        address: new FormGroup({
+          city: new FormControl('', [Validators.required]),
+          street: new FormControl(''),
+          pincode: new FormControl('', [
+            Validators.required,
+            Validators.maxLength(6),
+            Validators.pattern('^[0-9]*$'),
+          ]),
+        }),
+      });
+
+      constructor() {}
+
+      ngOnInit(): void {}
+
+      onSubmit() {
+        console.log(this.contactForm.value);
+      }
+    }
