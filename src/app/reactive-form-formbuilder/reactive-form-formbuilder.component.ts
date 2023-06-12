@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive-form-formbuilder',
@@ -18,6 +18,7 @@ export class ReactiveFormFormbuilderComponent implements OnInit {
       address: this.formBuilder.group({
         city: ['', [Validators.required]],
       }),
+      skills: this.formBuilder.array([]),
     });
   }
 
@@ -37,6 +38,26 @@ export class ReactiveFormFormbuilderComponent implements OnInit {
   }
 
   get city() {
-    return this.contactForm.get("address")?.get('city');
+    return this.contactForm.get('address')?.get('city');
   }
+
+  get skills(): FormArray {
+    return this.contactForm.get('skills') as FormArray;
+  }
+
+  newSkill(): FormGroup {
+    return this.formBuilder.group({
+      skill: ['', Validators.required],
+      exp: [''],
+    });
+  }
+
+  addSkills() {
+    this.skills.push(this.newSkill());
+  }
+
+  removeSkill(i:number) {
+    this.skills.removeAt(i);
+  }
+  
 }
